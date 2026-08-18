@@ -2426,7 +2426,11 @@
             tab.id = "emu-alliance-chat-native-tab";
             const notesButton = Array.from(tabBar.children).find(child => child.id === "notes_panel_button");
             const nativeButtonClass = notesButton instanceof HTMLElement ? notesButton.className : "";
-            tab.className = `${nativeButtonClass} emu-alliance-chat-native-tab`.trim();
+            tab.className = nativeButtonClass;
+            const iconClasses = notesButton?.querySelector("svg")?.className?.baseVal || "";
+            const rawSvg = tab.innerHTML;
+            tab.innerHTML = rawSvg.replace(/<svg\b([^>]*)>/, (m, attrs) =>
+                /\sclass\s*=/.test(attrs) ? m : `<svg${attrs} class="${iconClasses}">`);
             tab.type = "button";
             tab.title = "Alliance Chat";
             tab.setAttribute("aria-label", "Alliance Chat");
@@ -2832,13 +2836,17 @@
             tab = document.createElement("button");
             tab.id = "emu-family-chat-native-tab";
             const notesButton = Array.from(tabBar.children).find(child => child.id === "notes_panel_button");
-            const allianceButton = document.getElementById("emu-alliance-chat-native-tab");
             const nativeButtonClass = notesButton instanceof HTMLElement ? notesButton.className : "";
-            tab.className = `${nativeButtonClass} emu-alliance-chat-native-tab emu-family-chat-native-tab`.trim();
+            tab.className = nativeButtonClass;
             tab.type = "button";
             tab.title = "Emu Family Chat";
             tab.setAttribute("aria-label", "Emu Family Chat");
             tab.innerHTML = `<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="emuFamilyChatShield" x1="10" y1="7" x2="54" y2="58" gradientUnits="userSpaceOnUse"><stop stop-color="#b9ffe5"></stop><stop offset=".5" stop-color="#26c989"></stop><stop offset="1" stop-color="#07583c"></stop></linearGradient></defs><path d="M32 5 54 13v16c0 14-9 24-22 30C19 53 10 43 10 29V13L32 5Z" fill="url(#emuFamilyChatShield)" stroke="#eafff7" stroke-width="3" stroke-linejoin="round"></path><path d="M18 21h28v23H18z" rx="5" fill="#062b20" opacity=".78"></path><text x="32" y="36.5" fill="#eafff7" font-family="Arial,sans-serif" font-size="11" font-weight="900" text-anchor="middle">EMU</text></svg><b class="emu-alliance-chat-badge" hidden></b>`;
+            const iconClasses = notesButton?.querySelector("svg")?.className?.baseVal || "";
+            if (iconClasses) {
+                tab.innerHTML = tab.innerHTML.replace(/<svg\b([^>]*)>/, (m, attrs) =>
+                    /\sclass\s*=/.test(attrs) ? m : `<svg${attrs} class="${iconClasses}">`);
+            }
             tab.addEventListener("click", event => {
                 event.preventDefault();
                 event.stopPropagation();
@@ -2849,6 +2857,7 @@
             const scrollTop = Number(scrollElement?.scrollTop || 0);
             const scrollLeft = Number(scrollElement?.scrollLeft || 0);
             const routeKey = `${location.pathname}${location.search}${location.hash}`;
+            const allianceButton = document.getElementById("emu-alliance-chat-native-tab");
             const insertionPoint = allianceButton?.parentElement === tabBar ? allianceButton : (notesButton || tabBar.firstElementChild);
             tabBar.insertBefore(tab, insertionPoint);
             if (scrollElement && scrollTop > 0) {
@@ -13067,11 +13076,12 @@
       .emu-alliance-chat-launcher svg { width:19px!important;height:19px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important; }
       .emu-alliance-chat-badge { position:absolute!important;top:-7px!important;right:-7px!important;min-width:18px!important;height:18px!important;padding:0 4px!important;border:2px solid #101416!important;border-radius:12px!important;background:#f04e5e!important;color:#fff!important;font:700 10px/14px Arial,sans-serif!important;text-align:center!important; }
       .emu-alliance-chat-badge.is-mention { background:#ff9f1a!important;color:#160b00!important;box-shadow:0 0 0 2px rgba(255,159,26,.25),0 0 10px rgba(255,159,26,.8)!important; }
-      .emu-alliance-chat-native-tab { position:relative!important;display:flex!important;flex:0 0 var(--emu-alliance-chat-tab-width,40px)!important;width:var(--emu-alliance-chat-tab-width,40px)!important;min-width:30px!important;max-width:50px!important;height:100%!important;min-height:34px!important;align-items:center!important;justify-content:center!important;margin:0!important;padding:0!important;border:0!important;border-left:1px solid rgba(0,0,0,.35)!important;border-radius:0!important;background:linear-gradient(#4d4d4d,#303030)!important;box-shadow:inset 0 1px rgba(255,255,255,.08)!important;color:#d7d7d7!important;cursor:pointer!important;vertical-align:top!important; }
-      .emu-alliance-chat-native-tab:hover,.emu-alliance-chat-native-tab.is-active { background:linear-gradient(#7136a3,#35194e)!important;color:#fff!important; }
-      #emu-family-chat-native-tab:hover,#emu-family-chat-native-tab.is-active { background:linear-gradient(#168961,#074834)!important;color:#fff!important; }
-      .emu-alliance-chat-native-tab svg { display:block!important;width:27px!important;height:27px!important;overflow:visible!important;pointer-events:none!important; }
-      .emu-alliance-chat-native-tab .emu-alliance-chat-badge { top:-5px!important;right:3px!important; }
+      #emu-alliance-chat-native-tab.is-active,#emu-family-chat-native-tab.is-active { background:linear-gradient(#7136a3,#35194e)!important;color:#fff!important; }
+      #emu-family-chat-native-tab.is-active { background:linear-gradient(#168961,#074834)!important; }
+      #emu-alliance-chat-native-tab svg,#emu-family-chat-native-tab svg { display:block!important;width:27px!important;height:27px!important;overflow:visible!important;pointer-events:none!important; }
+      #emu-alliance-chat-native-tab:focus,#emu-alliance-chat-native-tab:focus-visible,
+      #emu-family-chat-native-tab:focus,#emu-family-chat-native-tab:focus-visible { outline:none!important; }
+      #emu-alliance-chat-native-tab .emu-alliance-chat-badge,#emu-family-chat-native-tab .emu-alliance-chat-badge { top:-5px!important;right:3px!important; }
       .emu-alliance-chat-panel { position:absolute!important;right:0!important;bottom:50px!important;display:grid!important;grid-template-rows:auto auto minmax(130px,1fr) auto!important;width:min(370px,calc(100vw - 24px))!important;height:min(500px,calc(100vh - 100px))!important;overflow:hidden!important;border:1px solid #347581!important;border-radius:10px!important;background:#0d1215!important;box-shadow:0 8px 28px rgba(0,0,0,.7)!important; }
       #emu-alliance-chat-root.is-shortcut-docked .emu-alliance-chat-panel,#emu-family-chat-root.is-shortcut-docked .emu-alliance-chat-panel { position:absolute!important;left:auto!important;top:auto!important;right:0!important;bottom:calc(var(--emu-alliance-chat-shortcut-height,40px) + 6px)!important;width:min(370px,calc(100vw - 16px))!important;height:min(500px,calc(100vh - var(--emu-alliance-chat-shortcut-height,40px) - 26px))!important;box-sizing:border-box!important; }
       #emu-family-chat-root .emu-alliance-chat-panel { border-color:#238b68!important; }
