@@ -13076,11 +13076,13 @@
       .emu-alliance-chat-launcher svg { width:19px!important;height:19px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important; }
       .emu-alliance-chat-badge { position:absolute!important;top:-7px!important;right:-7px!important;min-width:18px!important;height:18px!important;padding:0 4px!important;border:2px solid #101416!important;border-radius:12px!important;background:#f04e5e!important;color:#fff!important;font:700 10px/14px Arial,sans-serif!important;text-align:center!important; }
       .emu-alliance-chat-badge.is-mention { background:#ff9f1a!important;color:#160b00!important;box-shadow:0 0 0 2px rgba(255,159,26,.25),0 0 10px rgba(255,159,26,.8)!important; }
-      #emu-alliance-chat-native-tab.is-active,#emu-family-chat-native-tab.is-active { background:linear-gradient(#7136a3,#35194e)!important;color:#fff!important; }
-      #emu-family-chat-native-tab.is-active { background:linear-gradient(#168961,#074834)!important; }
-      #emu-alliance-chat-native-tab svg,#emu-family-chat-native-tab svg { display:block!important;width:27px!important;height:27px!important;overflow:visible!important;pointer-events:none!important; }
-      #emu-alliance-chat-native-tab:focus,#emu-alliance-chat-native-tab:focus-visible,
-      #emu-family-chat-native-tab:focus,#emu-family-chat-native-tab:focus-visible { outline:none!important; }
+      #emu-alliance-chat-native-tab { background:linear-gradient(#5a2a86,#2c1440)!important;color:#e2b7ff!important; }
+      #emu-family-chat-native-tab { background:linear-gradient(#0e6b4d,#053526)!important;color:#8dffcf!important; }
+      #emu-alliance-chat-native-tab:hover:not(.is-active) { filter:brightness(1.18); }
+      #emu-family-chat-native-tab:hover:not(.is-active) { filter:brightness(1.18); }
+      #emu-alliance-chat-native-tab.is-active { background:linear-gradient(#8a4cc7,#4a2270)!important;color:#fff!important; }
+      #emu-family-chat-native-tab.is-active { background:linear-gradient(#1cae7e,#0a5c40)!important;color:#fff!important; }      #emu-alliance-chat-native-tab svg,#emu-family-chat-native-tab svg { display:block!important;width:27px!important;height:27px!important;overflow:visible!important;pointer-events:none!important; }
+      #emu-alliance-chat-native-tab:focus,#emu-alliance-chat-native-tab:focus-visible,#emu-family-chat-native-tab:focus,#emu-family-chat-native-tab:focus-visible { outline:none!important; }
       #emu-alliance-chat-native-tab .emu-alliance-chat-badge,#emu-family-chat-native-tab .emu-alliance-chat-badge { top:-5px!important;right:3px!important; }
       .emu-alliance-chat-panel { position:absolute!important;right:0!important;bottom:50px!important;display:grid!important;grid-template-rows:auto auto minmax(130px,1fr) auto!important;width:min(370px,calc(100vw - 24px))!important;height:min(500px,calc(100vh - 100px))!important;overflow:hidden!important;border:1px solid #347581!important;border-radius:10px!important;background:#0d1215!important;box-shadow:0 8px 28px rgba(0,0,0,.7)!important; }
       #emu-alliance-chat-root.is-shortcut-docked .emu-alliance-chat-panel,#emu-family-chat-root.is-shortcut-docked .emu-alliance-chat-panel { position:absolute!important;left:auto!important;top:auto!important;right:0!important;bottom:calc(var(--emu-alliance-chat-shortcut-height,40px) + 6px)!important;width:min(370px,calc(100vw - 16px))!important;height:min(500px,calc(100vh - var(--emu-alliance-chat-shortcut-height,40px) - 26px))!important;box-sizing:border-box!important; }
